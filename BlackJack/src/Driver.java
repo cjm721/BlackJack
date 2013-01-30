@@ -1,13 +1,20 @@
 import java.util.*;
-public class Driver {
+import java.io.*;
 
-	public static void main (String [] args){
+public class Driver {
+	
+	public static void main (String [] args) throws IOException {
+		PrintStream out = new PrintStream(System.out, true, "UTF-8");
 		Scanner kb = new Scanner(System.in);
-		Game.shuffle();
+		for(int i = 0; i < 52; i++){
+			Card c = new Card(i);
+			out.println(c.toUniString());
+		}
+		
 		while(true){
-			kb.nextLine();
-			//Game.printVals();
-			System.out.println(Game.draw());
+			int i = kb.nextInt();
+			Card c = new Card(i);
+			System.out.println(c.toUniString());
 			
 		}
 		

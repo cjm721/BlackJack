@@ -7,6 +7,12 @@ public class Deck {
 	private Card[] deck = new Card[52];
 	private int[] pullOrder = new int[deck.length];
 	
+	public Deck(){
+		for(int i = 0; i < deck.length; i++){
+			deck[i]= new Card(i);
+		}
+	}
+	
 	public void shuffle(){
 		for(int i = 0; i < pullOrder.length; i++) pullOrder[i] = i;
 		currentDraw = 0;

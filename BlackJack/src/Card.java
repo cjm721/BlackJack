@@ -42,7 +42,7 @@ public class Card {
 		}else if (b < 4){
 			suit = "\u2666";
 		}else{
-			suit = "Unknown";
+			suit = "?";
 		}
 		return suit;
 	}

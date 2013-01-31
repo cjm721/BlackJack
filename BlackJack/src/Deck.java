@@ -1,5 +1,5 @@
-
 public class Deck {
+	
 	public final static int limit = 50000;
 	public static boolean debug = false;
 	

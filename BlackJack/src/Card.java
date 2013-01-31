@@ -107,7 +107,7 @@ public class Card {
 	
 	@Override
 	public String toString (){
-		return(name);
+		return name;
 	}
 	
 	public String toUniString(){

@@ -2,15 +2,16 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-
 public class Game {
 	
 	private Player[] players;
 	static PrintStream out;
 	private int playerCount;
 	private Deck deck;
-	public boolean debug = false;
+	public static boolean debug = false;
+	
 	private boolean[] bust;
+	private Scanner kb = new Scanner(System.in);
 	
 
 	public void runGame() throws UnsupportedEncodingException{
@@ -22,6 +23,7 @@ public class Game {
 		while(true) {
 			deal();
 			for(int i = 0; i < players.length; i++){
+				showHand(players[i]);
 				choice(players[i]);
 			}
 			
@@ -34,7 +36,6 @@ public class Game {
 	}
 	
 	private void setPlayers(){
-		Scanner kb = new Scanner(System.in);
 		System.out.println("How many players are there?");
 		boolean goodinput;
 		String input;
@@ -44,10 +45,14 @@ public class Game {
 			for(int i = 0; i < input.length(); i++){
 				if(!Character.isDigit(input.charAt(i))){
 					goodinput = false;
+					System.out.println("Not a number. Please input number of players");
+				}else if(Integer.parseInt(""+input.charAt(0)) < 1){
+					goodinput = false;
+					System.out.println("Dealer cannot play by himself.");
 				}
+				
 			}
 			if(goodinput)break;
-			System.out.println("Not a number. Please input number of players");
 		}while(!goodinput);
 		
 		
@@ -61,7 +66,6 @@ public class Game {
 			players[i] = p;
 			if(debug)System.out.println("Testing array: " + players[i]);
 		}
-		kb.close();
 	}
 	
 	private void deal(){
@@ -78,9 +82,8 @@ public class Game {
 	}
 	
 	private void choice(Player p){
-		Scanner kb = new Scanner(System.in);
 		System.out.println(p.toString()+ " enter your move (Hit, Pass, Split).");
-		boolean done = true;
+		boolean done = false;
 		while(!done){
 			String temp = kb.nextLine();
 			int uC = userChoice(temp);
@@ -88,19 +91,22 @@ public class Game {
 			case -1:
 				System.out.println("Invalid entry. Enter Hit, Pass, or Split");
 				break;
-			case 0:
-				p.addHand(deck.deal());
+			case 0:							//Hit
+				Card c = deck.deal();
+				p.addHand(c);
+				System.out.println(p + " recived a " + c.toUniString());
 				done = true;
+				choice(p);
 				break;
-			case 1:
+			case 1:							//Pass
 				done = true;
+				if(debug)System.out.println(p + " passed");
 				break;
-			case 2:
+			case 2:							//Split
 				done = true;
 				break;						//NEED SPLIT CODE!!!
 			}
 		}
-		kb.close();
 	}
 	/*
 	 * 0 = hit
@@ -108,6 +114,7 @@ public class Game {
 	 * -1 = invalid
 	 */
 	private int userChoice(String s){
+		s = s.toLowerCase();
 		char temp = s.charAt(0);
 		if(debug) System.out.println("userChoice - temp: " + temp);
 		
@@ -150,4 +157,11 @@ public class Game {
 		return value;
 	}
 	
+	private void showHand(Player p){
+		String temp = "";
+		for(Card d: p.currentHand()){
+			temp += d.toUniString() + " ";
+		}
+		System.out.println(temp);
+	}
 }

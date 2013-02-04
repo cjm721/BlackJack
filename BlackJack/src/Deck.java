@@ -1,7 +1,7 @@
 public class Deck {
 	
 	public final static int limit = 50000;
-	public static boolean debug = true;
+	public static boolean debug = false;
 	
 	private int currentDraw;
 	private Card[] deck = new Card[52];
@@ -40,5 +40,11 @@ public class Deck {
 			if(debug)System.out.println("Incrementing currentDraw to: " + currentDraw);
 		}
 		return temp;
+	}
+	
+	public void printDeck(){
+		for(Card d: deck){
+			System.out.println(d.toUniString());
+		}
 	}
 }

@@ -1,8 +1,8 @@
 
 public class Testing_Git {
 	public static void main(String [] args){
-		Card c = new Card(0);
-		System.out.println(c.twoDCard());
+		Deck d = new Deck();
+		d.printDeck();
 	}
 	
 	

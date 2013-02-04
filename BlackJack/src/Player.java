@@ -24,4 +24,8 @@ public class Player {
 	public void clearHand(){
 		hand.clear();
 	}
+	@Override
+	public String toString(){
+		return name;
+	}
 }

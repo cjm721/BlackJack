@@ -15,6 +15,7 @@ public class Card {
 	
 	private String suit(int i){
 		String suit;
+		id = i;
 		int b = i/13;
 		if(b < 1){
 			suit = "Hearts";
@@ -116,5 +117,19 @@ public class Card {
 	
 	public int getValue(){
 		return value;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public String twoDCard(){
+		String temp = 	" ___________\n" +
+						"|          |\n" + 
+						"|          |\n" +
+						"|    " + uniName + "    |\n" +
+						"|          |\n" + 
+						"|__________|\n";
+		return temp;
 	}
 }

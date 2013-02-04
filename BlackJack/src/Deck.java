@@ -1,35 +1,34 @@
 public class Deck {
 	
 	public final static int limit = 50000;
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	private int currentDraw;
 	private Card[] deck = new Card[52];
-	private int[] pullOrder = new int[deck.length];
 	
 	public Deck(){
+		if(debug)System.out.println("Making new deck");
 		for(int i = 0; i < deck.length; i++){
 			deck[i]= new Card(i);
 		}
 	}
 	
 	public void shuffle(){
-		for(int i = 0; i < pullOrder.length; i++) pullOrder[i] = i;
+		if(debug)System.out.println("Shuffling " + this);
 		currentDraw = 0;
-		
 		for(int i = 0; i < limit; i++){
-			int a = (int)(Math.random()*pullOrder.length);
-			int b = (int)(Math.random()*pullOrder.length);
-			int temp = pullOrder[b];
-			pullOrder[b] = pullOrder[a];
-			pullOrder[a] = temp;
+			int a = (int)(Math.random()*deck.length);
+			int b = (int)(Math.random()*deck.length);
+			Card temp = deck[b];
+			deck[b] = deck[a];
+			deck[a] = temp;
 		}
 	}
 	
-	public void deal(Player p){
+	public Card deal(){
 		if(debug) System.out.println("Entering Draw, currentDraw = " + currentDraw);
 			
-		Card temp = deck[pullOrder[currentDraw]];
+		Card temp = deck[currentDraw];
 		if(currentDraw >= deck.length-1){
 			shuffle();
 			System.out.println("Shuffling");
@@ -40,6 +39,6 @@ public class Deck {
 			currentDraw++;
 			if(debug)System.out.println("Incrementing currentDraw to: " + currentDraw);
 		}
-		p.addHand(temp);
+		return temp;
 	}
 }

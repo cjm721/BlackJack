@@ -2,13 +2,13 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-public class Game {
+public class Blackjack {
 	
 	private Player[] players;
 	static PrintStream out;
 	private int playerCount;
 	private Deck deck;
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	private boolean[] bust;
 	private Scanner kb = new Scanner(System.in);
@@ -95,7 +95,10 @@ public class Game {
 				Card c = deck.deal();
 				p.addHand(c);
 				System.out.println(p + " recived a " + c.toUniString());
-				done = true;
+				if(bust(p)){
+					System.out.println("Busted");
+					done = true;
+				}
 				choice(p);
 				break;
 			case 1:							//Pass
@@ -154,7 +157,12 @@ public class Game {
 		for(int i = 0; i < temp.length; i++){
 			value += temp[i].getValue();
 		}
+		if(debug)System.out.println(p + "'s hand value: " + value);
 		return value;
+	}
+	
+	private boolean bust(Player p){
+		return handValue(p) > 21;
 	}
 	
 	private void showHand(Player p){
